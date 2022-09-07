@@ -3,7 +3,7 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('Policies', [
       {
-        name: 'Bilbo',
+        name: 'Best Policy 2000',
         premium: 150,
         description: 'This shit covers everything',
         agentName: 'Bob Sizzle'
