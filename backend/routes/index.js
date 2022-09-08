@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const apiRouter = require('./api');
-const { setTokenCookie } = require('auth.js');
 const { User } = require('../../db/models');
 
 router.use('/api', apiRouter);
@@ -17,17 +16,6 @@ router.get("/api/csrf/restore", (req, res) => {
 router.get('/hello/world', function(req, res) {
   res.cookie('XSRF-TOKEN', req.csrfToken());
   res.send('Hello World!');
-});
-
-// GET /api/set-token-cookie
-router.get('/set-token-cookie', async (_req, res) => {
-  const user = await User.findOne({
-      where: {
-        username: 'Demo-lition'
-      }
-    });
-  setTokenCookie(res, user);
-  return res.json({ user });
 });
 
 module.exports = router;
