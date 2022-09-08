@@ -17,4 +17,30 @@ router.get('/set-token-cookie', async (_req, res) => {
   return res.json({ user });
 });
 
+const { restoreUser } = require('../../utils/auth.js');
+
+// GET /api/restore-user
+router.use(restoreUser);
+
+// GET /api/require-auth
+const { requireAuth } = require('../../utils/auth.js');
+router.get(
+  '/require-auth',
+  requireAuth,
+  (req, res) => {
+    return res.json(req.user);
+  }
+);
+
+const { Policy } = require('../../db/models');
+router.get('/policy', async (_req, res) => {
+  const policy = await Policy.findOne({
+      where: {
+        name: 'Bilbo'
+      }
+    });
+  setTokenCookie(res, policy);
+  return res.json({ policy });
+});
+
 module.exports = router;
